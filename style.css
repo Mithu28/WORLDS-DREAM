@@ -1,0 +1,224 @@
+:root {
+  --bg: #070b1f;
+  --bg2: #0f1640;
+  --violet: #6c4cff;
+  --cyan: #3fd0ff;
+  --gold: #f0c668;
+  --text: #eaf0ff;
+  --muted: #8f9bc9;
+  --card: rgba(255, 255, 255, 0.05);
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  color: var(--text);
+  font-family: "Rajdhani", system-ui, sans-serif;
+  font-size: 18px;
+  background: var(--bg);
+  min-height: 100vh;
+}
+
+.bg {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  background:
+    radial-gradient(900px 500px at 15% 0%, rgba(108, 76, 255, 0.35), transparent 60%),
+    radial-gradient(800px 500px at 90% 100%, rgba(63, 208, 255, 0.22), transparent 60%),
+    linear-gradient(180deg, var(--bg), var(--bg2));
+}
+
+main { max-width: 1000px; margin: 0 auto; padding: 20px 16px 60px; }
+
+.hidden { display: none !important; }
+
+.logo { text-align: center; margin: 10px 0 24px; }
+.logo span {
+  font-family: "Orbitron", sans-serif;
+  font-weight: 800;
+  font-size: clamp(30px, 6vw, 54px);
+  letter-spacing: 4px;
+}
+.logo .l1 { color: var(--text); }
+.logo .l2 {
+  margin-left: 12px;
+  background: linear-gradient(90deg, var(--gold), #fff3cf);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+.logo small {
+  display: block;
+  margin-top: 4px;
+  color: var(--cyan);
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  font-size: 14px;
+}
+
+h2 {
+  font-family: "Orbitron", sans-serif;
+  font-size: 15px;
+  letter-spacing: 2px;
+  color: var(--gold);
+  margin: 26px 0 10px;
+  text-transform: uppercase;
+}
+
+.grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.grid3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+
+@media (max-width: 700px) {
+  .grid2, .grid3 { grid-template-columns: 1fr; }
+}
+
+.card {
+  text-align: left;
+  color: var(--text);
+  background: var(--card);
+  border: 1.5px solid rgba(255, 255, 255, 0.12);
+  border-radius: 14px;
+  padding: 14px 16px;
+  font-family: inherit;
+  font-size: inherit;
+  cursor: pointer;
+  transition: transform 0.15s, border-color 0.15s, box-shadow 0.15s;
+}
+.card:hover { transform: translateY(-2px); border-color: var(--cyan); }
+.card.sel {
+  border-color: var(--gold);
+  box-shadow: 0 0 0 1px var(--gold), 0 0 24px rgba(240, 198, 104, 0.2);
+}
+.card h3 { margin: 0 0 4px; font-family: "Orbitron", sans-serif; font-size: 16px; }
+.card p { margin: 0; color: var(--muted); }
+
+input[type="text"], select {
+  width: 100%;
+  padding: 12px 14px;
+  border-radius: 12px;
+  border: 1.5px solid rgba(255, 255, 255, 0.15);
+  background: rgba(0, 0, 0, 0.3);
+  color: var(--text);
+  font-family: inherit;
+  font-size: inherit;
+}
+input:focus, select:focus { outline: none; border-color: var(--cyan); }
+label { display: block; margin-top: 14px; color: var(--muted); }
+label select { margin-top: 6px; }
+
+.cta {
+  display: block;
+  width: 100%;
+  margin-top: 28px;
+  padding: 14px;
+  border: 0;
+  border-radius: 14px;
+  font-family: "Orbitron", sans-serif;
+  font-weight: 800;
+  letter-spacing: 2px;
+  font-size: 16px;
+  color: #1a1330;
+  background: linear-gradient(90deg, var(--gold), #ffe9a8);
+  cursor: pointer;
+  transition: transform 0.15s, filter 0.15s;
+}
+.cta:hover { transform: translateY(-2px); filter: brightness(1.08); }
+.cta.ghost {
+  color: var(--text);
+  background: transparent;
+  border: 1.5px solid var(--violet);
+}
+
+/* Jeu */
+.bar {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  flex-wrap: wrap;
+  align-items: center;
+  padding: 12px 16px;
+  border-radius: 14px;
+  background: linear-gradient(90deg, rgba(108, 76, 255, 0.35), rgba(63, 208, 255, 0.15));
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  margin-bottom: 14px;
+}
+#turn { font-family: "Orbitron", sans-serif; font-size: 16px; }
+#info { color: var(--cyan); }
+
+.boards { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 18px; }
+@media (max-width: 700px) { .boards { grid-template-columns: 1fr; } }
+
+.board {
+  padding: 12px;
+  border-radius: 14px;
+  background: var(--card);
+  border: 1.5px solid rgba(255, 255, 255, 0.1);
+}
+.board.active { border-color: var(--gold); box-shadow: 0 0 22px rgba(240, 198, 104, 0.2); }
+.board h3 { margin: 0 0 8px; font-family: "Orbitron", sans-serif; font-size: 15px; }
+
+.slot {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 7px 0;
+  border-top: 1px solid rgba(255, 255, 255, 0.07);
+}
+.slot .role { width: 64px; color: var(--muted); text-transform: uppercase; font-size: 14px; }
+.slot .pname { flex: 1; font-weight: 700; }
+.slot .pname.empty { color: var(--muted); font-weight: 500; }
+.slot .rating { color: var(--gold); font-weight: 700; }
+
+.tag {
+  display: inline-block;
+  padding: 1px 8px;
+  border-radius: 6px;
+  font-size: 13px;
+  font-weight: 700;
+  color: #fff;
+  background: #444;
+}
+
+.pcard { text-align: center; padding: 18px 12px; border-width: 2px; }
+.pcard .big { display: block; font-size: 26px; font-weight: 700; margin: 8px 0 4px; }
+
+.reroll {
+  margin: 16px auto 0;
+  display: block;
+  padding: 10px 22px;
+  border-radius: 12px;
+  border: 1.5px solid var(--cyan);
+  background: transparent;
+  color: var(--cyan);
+  font-family: inherit;
+  font-size: inherit;
+  font-weight: 700;
+  cursor: pointer;
+}
+.reroll:disabled { opacity: 0.35; cursor: not-allowed; }
+
+.plist { display: grid; gap: 8px; margin-top: 12px; max-height: 360px; overflow-y: auto; }
+.prow {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 14px;
+  text-align: left;
+}
+
+.wait { text-align: center; color: var(--muted); padding: 30px 0; font-size: 20px; }
+
+/* Résultat */
+.winner {
+  text-align: center;
+  font-family: "Orbitron", sans-serif;
+  font-size: clamp(22px, 4vw, 34px);
+  margin: 10px 0 24px;
+  color: var(--gold);
+  text-shadow: 0 0 24px rgba(240, 198, 104, 0.4);
+}
+.total { margin-top: 10px; padding-top: 10px; border-top: 2px solid var(--gold); font-weight: 700; }
+.total .big { float: right; font-family: "Orbitron", sans-serif; color: var(--gold); font-size: 22px; }
+.syn { color: var(--cyan); }
