@@ -6,41 +6,45 @@
   <title>WORLDS-DREAM</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;800&family=Rajdhani:wght@500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800&family=Barlow:wght@500;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <div class="bg"></div>
+  <div class="shards"></div>
+
+  <!-- Bandeau cyan qui défile (comme sur le visuel des Play-Ins) -->
+  <div class="topbar"><div class="marq" id="marq"></div></div>
 
   <main>
-    <header class="logo">
-      <span class="l1">WORLDS</span><span class="l2">DREAM</span>
-      <small>Draft 1v1 · Édition Worlds 2023</small>
-    </header>
 
-    <!-- MENU -->
+    <!-- ============ MENU ============ -->
     <section id="menu" class="screen">
-      <h2>1. Choisis un mode</h2>
+      <header class="logo">
+        <h1>WORLDS<span>-DREAM</span></h1>
+        <p>Draft ta dream team, puis traverse le tournoi : poules, quarts, demies, finale.</p>
+      </header>
+
+      <h2>01 · Mode de draft</h2>
       <div class="grid2">
         <button class="card sel" data-mode="three">
-          <h3>Mode 3 équipes</h3>
-          <p>À chaque poste, choisis parmi 3 joueurs de 3 équipes. Tu as 3 rerolls.</p>
+          <b>3 ÉQUIPES</b>
+          <span>Sur la carte, à chaque poste tu choisis 1 joueur parmi 3 équipes. 3 rerolls par joueur.</span>
         </button>
         <button class="card" data-mode="free">
-          <h3>Mode libre</h3>
-          <p>Choisis n'importe quel joueur, toi-même.</p>
+          <b>LIBRE</b>
+          <span>Tu choisis n'importe quel joueur. Un joueur pris par l'autre n'est plus disponible.</span>
         </button>
       </div>
 
-      <h2>2. Contre qui ?</h2>
+      <h2>02 · Adversaire</h2>
       <div class="grid2">
         <button class="card sel" data-opp="local">
-          <h3>1v1 local</h3>
-          <p>Deux joueurs sur le même écran.</p>
+          <b>1V1 LOCAL</b>
+          <span>Deux joueurs sur le même écran.</span>
         </button>
         <button class="card" data-opp="ai">
-          <h3>1v1 solo</h3>
-          <p>Tu affrontes le programme.</p>
+          <b>1V1 SOLO</b>
+          <span>Tu affrontes le programme.</span>
         </button>
       </div>
 
@@ -54,37 +58,117 @@
         </label>
       </div>
 
-      <h2>3. Les noms</h2>
+      <h2>03 · Les noms</h2>
       <div class="grid2">
-        <input id="n1" type="text" placeholder="Joueur 1" maxlength="16">
-        <input id="n2" type="text" placeholder="Joueur 2" maxlength="16">
+        <input id="n1" type="text" placeholder="Joueur 1" maxlength="14">
+        <input id="n2" type="text" placeholder="Joueur 2" maxlength="14">
       </div>
 
-      <button id="start" class="cta">Lancer la partie</button>
+      <button id="start" class="cta">LANCER LA DRAFT</button>
     </section>
 
-    <!-- JEU -->
-    <section id="game" class="screen hidden">
-      <div class="bar">
-        <div id="turn"></div>
-        <div id="info"></div>
+    <!-- ============ DRAFT ============ -->
+    <section id="draft" class="screen hidden">
+      <div class="dhead">
+        <div id="dTurn" class="turn"></div>
+        <div id="dInfo" class="info"></div>
       </div>
-      <div class="boards">
-        <div class="board" id="b0"></div>
-        <div class="board" id="b1"></div>
+      <div class="dgrid">
+        <div class="mapwrap"><svg id="draftMap" viewBox="0 0 600 600"></svg></div>
+        <div class="side">
+          <div id="dPanel" class="panel"></div>
+          <div id="dRosters" class="rosters"></div>
+        </div>
       </div>
-      <div id="choices"></div>
     </section>
 
-    <!-- RÉSULTAT -->
-    <section id="result" class="screen hidden">
-      <div id="winner" class="winner"></div>
-      <div class="boards" id="finalBoards"></div>
+    <!-- ============ TOURNOI ============ -->
+    <section id="hub" class="screen hidden">
+      <div id="groups" class="groups"></div>
+      <div id="bracket" class="bracket"></div>
+      <div class="dock">
+        <div id="dockInfo"></div>
+        <button id="dockBtn" class="cta small">JOUER</button>
+      </div>
+    </section>
+
+    <!-- ============ MATCH ============ -->
+    <section id="match" class="screen hidden">
+      <div class="mstage" id="mStage"></div>
+
+      <div class="scoreboard">
+        <div class="sb A">
+          <span class="stag" id="sbTagA"></span>
+          <b id="sbNameA"></b>
+          <small id="sbStatA"></small>
+        </div>
+        <div class="sbmid">
+          <div id="mClock">00:00</div>
+          <div class="kk"><b id="kA">0</b><i>KILLS</i><b id="kB">0</b></div>
+        </div>
+        <div class="sb B">
+          <span class="stag" id="sbTagB"></span>
+          <b id="sbNameB"></b>
+          <small id="sbStatB"></small>
+        </div>
+      </div>
+
+      <div class="momentum"><div id="momA"></div></div>
+
+      <div class="mgrid">
+        <div class="mapwrap"><svg id="simMap" viewBox="0 0 600 600"></svg></div>
+
+        <div class="feedbox">
+          <!-- Avant le match -->
+          <div id="pre">
+            <h3>COMPOSITIONS</h3>
+            <div class="lineups">
+              <div id="luA"></div>
+              <div id="luB"></div>
+            </div>
+            <div class="odds"><div id="oddsA"></div></div>
+            <div class="oddsT"><span id="oA"></span><span id="oB"></span></div>
+            <button id="btnGo" class="cta">LANCER LE MATCH</button>
+          </div>
+
+          <!-- Pendant le match -->
+          <div id="live" class="hidden">
+            <div id="feedNow" class="now"></div>
+            <ul id="feedList" class="feedlist"></ul>
+            <div class="ctrl">
+              <span>Vitesse</span>
+              <button class="spd" data-s="1">x1</button>
+              <button class="spd" data-s="2">x2</button>
+              <button class="spd" data-s="4">x4</button>
+              <button id="btnSkip" class="spd skip">PASSER</button>
+            </div>
+          </div>
+
+          <!-- Fin du match -->
+          <div id="mResult" class="result hidden">
+            <small>VICTOIRE</small>
+            <h2 id="resName"></h2>
+            <p id="resScore"></p>
+            <button id="btnNext" class="cta">CONTINUER</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ FINAL ============ -->
+    <section id="final" class="screen hidden">
+      <div class="trophy">
+        <small>CHAMPION DU MONDE</small>
+        <h1 id="cName"></h1>
+      </div>
+      <div id="verdict" class="verdict"></div>
+      <div id="fGrid" class="fgrid"></div>
       <div class="grid2">
-        <button id="replay" class="cta">Rejouer</button>
-        <button id="toMenu" class="cta ghost">Menu</button>
+        <button id="replay" class="cta">REJOUER</button>
+        <button id="toMenu" class="cta ghost">MENU</button>
       </div>
     </section>
+
   </main>
 
   <script src="data.js"></script>
